@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jarvis Assistant</title>
+    <link rel="stylesheet" href="{% static 'saro.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Saro Jarvis Assistant</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="command" placeholder="Enter your command..." required />
+            <button type="submit">Send</button>
+        </form>
+
+        <hr>
+
+        {% if response %}
+            <p><strong>Response:</strong> {{ response }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
