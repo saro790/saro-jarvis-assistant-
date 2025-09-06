@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: django-app   # change this to your app name
+    env: python
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate
+    startCommand: gunicorn myproject.wsgi:application
+    envVars:
+      - key: DEBUG
+        value: False
+      - key: SECRET_KEY
+        sync: false   # set this in Render dashboard manually
+      - key: DATABASE_URL
+        fromDatabase:
+          name: django-db
+          property: connectionString
+
+databases:
+  - name: django-db
+    plan: free
